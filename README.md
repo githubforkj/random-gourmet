@@ -41,3 +41,9 @@
 3. 2.絞り込みを行ったうえで、乱数を使用しランダムに飲食店を提示する
 4. ユーザーの現在地から飲食店までの道のりを提示する
     - Googleマップへの誘導を行う？
+
+
+
+## 参考
+https://tat-pytone.hatenablog.com/entry/2022/05/04/123755
+https://zenn.dev/kohhee/articles/d4f96624b82e50
