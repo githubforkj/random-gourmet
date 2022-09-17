@@ -1,0 +1,78 @@
+{% extends 'base.html' %} {% block head %}
+<title>Task Master</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css')}}" />
+{% endblock %} {% block body %}
+<div class="content">
+  <h1 style="text-align: center">外食ルーレット</h1>
+
+  {% if records|length < 1 %}
+  <h4 style="text-align: center">There are no tasks. Create one below!</h4>
+  {% else %}
+  <table style="text-align: center">
+    <tr>
+      <th>Task</th>
+      <th>Added</th>
+      <th>Actions</th>
+    </tr>
+
+    {% for record in records %}
+    <tr>
+      <td>{{ record.price }}</td>
+      <td>{{ record.num }}</td>
+      <td>{{ record.place }}</td>
+      <td>{{ record.date_created.date()}}</td>
+      <td>
+        <a href="/delete/{{record.id}}">Delete</a>
+        <br />
+        <a href="/update/{{record.id}}">Update</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+  {% endif %}
+  <!-- <div class="form">
+    <form action="/" method="POST">
+      <input type="text" name="content" id="content" />
+      <input type="submit" value="Add Task" />
+    </form>
+  </div> -->
+</div>
+
+<div class="form">
+  <form action="/" method="POST">
+    <div class="price">
+      <p>料金</p>
+      <input type="radio" name="price" id = price value="~1000円" />~1000円
+      <input type="radio" name="price" id = price value="1000円~2000円" />1000円~2000円
+      <input type="radio" name="price" id = price value="2000円~3000円" />2000円~3000円
+      <input type="radio" name="price" id = price value="4000円~5000円" />4000円~5000円
+      <input type="radio" name="price" id = price value="6000円~10000円" />6000円~10000円
+      <input type="radio" name="price" id = price value="10000円~" />10000円~
+    </div>
+
+    <div class="num">
+      <p>人数</p>
+      <input type="radio" name="num" id = "num" value="1人" />1人
+      <input type="radio" name="num" id = "num" value="2人" />2人
+      <input type="radio" name="num" id = "num" value="3人" />3人
+      <input type="radio" name="num" id = "num" value="4人" />4人
+      <input type="radio" name="num" id = "num" value="5~10人" />5~10人
+      <input type="radio" name="num" id = "num" value="11人~" />11人~
+    </div>
+
+    <div class="place">
+      <p>場所</p>
+      <input type="radio" name="place" id = "place" value="都心" />都心
+      <input type="radio" name="place" id = "place" value="副都心" />副都心
+      <input type="radio" name="place" id = "place" value="西部" />西部
+      <input type="radio" name="place" id = "place" value="東部" />東部
+    </div>
+
+    <div>
+			<input type="submit" value="START">
+		</div>
+  </form>
+</div>
+
+
+{% endblock %}
