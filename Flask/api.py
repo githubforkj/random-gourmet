@@ -3,6 +3,7 @@ from urllib import response
 import requests
 import json 
 
+
 # 中エリアを取得する
 def middle_area_masta():
     # エリアマスタAPI用のクエリ
@@ -31,13 +32,14 @@ def middle_area_masta():
 
 # 店舗情報等を取得する
 # 場所のみ絞り込みが出来ている。後は価格帯を整形する。
-def gourmet_search(code):
+def gourmet_search(area_code,budget_code):
     # グルメサーチAPI用のクエリ
     query = {
     'key': '2bc4f479e6c2392d',
     # 'lat': '35.75012327488292', # 北千住駅の緯度
     # 'lng': '139.80508505043517', # 北千住駅の経度
-    'middle_area': code, # 中エリアのコードを入力する
+    'middle_area': area_code, # 中エリアのコードを入力する
+    'budget': budget_code, # 平均予算のコード
     'range': '3',
     'count': 100,
     'format': 'json'
@@ -80,11 +82,32 @@ def gourmet_search(code):
 
         gourment.append(g)
 
-    print('gourment')
+    # print('gourment')
     return gourment
     
+
+def budget_masta():
+    query = {
+    'key': '2bc4f479e6c2392d',
+    'format': 'json'
+        }
     
+    url = 'http://webservice.recruit.co.jp/hotpepper/budget/v1/'
+
+    responce = requests.get(url, query)
+
+    result = json.loads(responce.text)['results']['budget']
+
+    b = {}
+    # 中エリアのコードと名称を取得
+    for (u,v) in enumerate(result):
+        b[v['name']] = v['code']
+    print(b['～500円'])
+    return b
 
 
-middle_area_masta()
-# gourmet_search()
+
+
+# middle_area_masta()
+# gourmet_search(area_code,budget_code)
+budget_masta()

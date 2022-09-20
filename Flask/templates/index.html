@@ -9,6 +9,39 @@
   {% if records|length < 1 %}
   <h4 style="text-align: center">There are no Restaulant. Create one below!</h4>
 
+  <!-- ラジオボタン -->
+  <div class="form">
+    <form action="/" method="POST">
+      <div class="price">
+        <p>料金</p>
+        {% for b in budget %}
+        <input type="radio" name="price" id="price" value="{{b}}" />{{b}} {%
+        endfor %}
+      </div>
+
+      <div class="num">
+        <p>人数</p>
+        <input type="radio" name="num" id="num" value="1人" />1人
+        <input type="radio" name="num" id="num" value="2人" />2人
+        <input type="radio" name="num" id="num" value="3人" />3人
+        <input type="radio" name="num" id="num" value="4人" />4人
+        <input type="radio" name="num" id="num" value="5~10人" />5~10人
+        <input type="radio" name="num" id="num" value="11人~" />11人~
+      </div>
+
+      <div class="place">
+        <p>場所</p>
+        {% for area in middle_area %}
+        <input type="radio" name="place" id="place" value="{{area}}" />{{area}}
+        {% endfor %}
+      </div>
+
+      <div>
+        <input type="submit" value="START" />
+      </div>
+    </form>
+  </div>
+
   <!-- レコードを確認するためのテーブル -->
   {% else %}
   <table style="text-align: center">
@@ -26,7 +59,8 @@
       <td>{{ record.num }}</td>
       <td>{{ record.place }}</td>
       <td>{{ record.date_created.date()}}</td>
-      <td>{{ record.area_id }}</td> <!--apiでコードを出すようにする-->
+      <td>{{ record.area_id }}</td>
+      <!--apiでコードを出すようにする-->
 
       <td>
         <a href="/delete/{{record.id}}">Delete</a>
@@ -36,69 +70,44 @@
     </tr>
     {% endfor %}
   </table>
+  <!-- ラジオボタン -->
+  <div class="form">
+    <form action="/" method="POST">
+      <div class="price">
+        <p>料金</p>
+        {% for b in budget %}
+        <input type="radio" name="price" id="price" value="{{b}}" />{{b}} {%
+        endfor %}
+      </div>
+
+      <div class="num">
+        <p>人数</p>
+        <input type="radio" name="num" id="num" value="1人" />1人
+        <input type="radio" name="num" id="num" value="2人" />2人
+        <input type="radio" name="num" id="num" value="3人" />3人
+        <input type="radio" name="num" id="num" value="4人" />4人
+        <input type="radio" name="num" id="num" value="5~10人" />5~10人
+        <input type="radio" name="num" id="num" value="11人~" />11人~
+      </div>
+
+      <div class="place">
+        <p>場所</p>
+        {% for area in middle_area %}
+        <input type="radio" name="place" id="place" value="{{area}}" />{{area}}
+        {% endfor %}
+      </div>
+
+      <div>
+        <input type="submit" value="START" />
+      </div>
+    </form>
+  </div>
+
+  <!-- 抽出した100件のデータからランダムに1件を指定する -->
+  <!-- <div>{{ api3 }}</div> -->
+  <div>{{ api3[range(1,100) | random] }}</div>
+
   {% endif %}
-</div>
-
-
-<!-- ラジオボタン -->
-<div class="form">
-  <form action="/" method="POST">
-    <div class="price">
-      <p>料金</p>
-      <input type="radio" name="price" id="price" value="~1000円" />~1000円
-      <input
-        type="radio"
-        name="price"
-        id="price"
-        value="1000円~2000円"
-      />1000円~2000円
-      <input
-        type="radio"
-        name="price"
-        id="price"
-        value="2000円~3000円"
-      />2000円~3000円
-      <input
-        type="radio"
-        name="price"
-        id="price"
-        value="4000円~5000円"
-      />4000円~5000円
-      <input
-        type="radio"
-        name="price"
-        id="price"
-        value="6000円~10000円"
-      />6000円~10000円
-      <input type="radio" name="price" id="price" value="10000円~" />10000円~
-    </div>
-
-    <div class="num">
-      <p>人数</p>
-      <input type="radio" name="num" id="num" value="1人" />1人
-      <input type="radio" name="num" id="num" value="2人" />2人
-      <input type="radio" name="num" id="num" value="3人" />3人
-      <input type="radio" name="num" id="num" value="4人" />4人
-      <input type="radio" name="num" id="num" value="5~10人" />5~10人
-      <input type="radio" name="num" id="num" value="11人~" />11人~
-    </div>
-
-    <div class="place">
-      <p>場所</p>
-      {% for area in middle_area %}
-      <input type="radio" name="place" id="place" value="{{area}}" />{{area}} {%
-      endfor %}
-    </div>
-
-    <div>
-      <input type="submit" value="START" />
-    </div>
-  </form>
-</div>
-
-<!-- 抽出した100件のデータからランダムに1件を指定する -->
-<div>
-  {{ api2[range(1,100) | random] }}
 </div>
 
 {% endblock %}
