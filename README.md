@@ -69,3 +69,4 @@
 ## 参考
 - https://tat-pytone.hatenablog.com/entry/2022/05/04/123755
 - https://zenn.dev/kohhee/articles/d4f96624b82e50
+- https://www.youtube.com/watch?v=_YeN69XoqqU
