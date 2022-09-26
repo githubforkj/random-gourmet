@@ -4,140 +4,29 @@
 {% endblock %} {% block body %}
 <div class="content">
   <h1 style="text-align: center">{{ name }}</h1>
+  <div id="app">
+    <h1>{message}</h1>
 
-  <!-- レコードが一つも無かったら表示する -->
-  {% if records|length < 1 %}
-  <h4 style="text-align: center">There are no Restaulant. Create one below!</h4>
-
-  <!-- ラジオボタン -->
-  <div class="form">
-    <form action="/" method="POST">
-      <div class="price">
-        <p>料金</p>
-        {% for b in budget %}
-        <input type="radio" name="price" id="price" value="{{b}}" />{{b}} {%
-        endfor %}
-      </div>
-
-      <div class="num">
-        <p>人数</p>
-        <input type="radio" name="num" id="num" value="1人" />1人
-        <input type="radio" name="num" id="num" value="2人" />2人
-        <input type="radio" name="num" id="num" value="3人" />3人
-        <input type="radio" name="num" id="num" value="4人" />4人
-        <input type="radio" name="num" id="num" value="5~10人" />5~10人
-        <input type="radio" name="num" id="num" value="11人~" />11人~
-      </div>
-
-      <div class="place">
-        <p>場所</p>
-        {% for area in middle_area %}
-        <input type="radio" name="place" id="place" value="{{area}}" />{{area}}
-        {% endfor %}
-      </div>
-
-      <div>
-        <input type="submit" value="START" />
+    <form @submit.prevent="createTask">
+      <div class="form-group row">
+        <div class="col-9">
+          <label for="">create new task</label>
+          <input type="text" class="form-control" v-model="task.title" />
+        </div>
+        <div class="col-auto mt-auto">
+          <button class="btn btn-success" type="submit">Create</button>
+        </div>
       </div>
     </form>
-  </div>
 
-  <!-- レコードを確認するためのテーブル -->
-  {% else %}
-  <table style="text-align: center">
-    <tr>
-      <th>price</th>
-      <th>People</th>
-      <th>Area</th>
-      <th>Date</th>
-      <th>Area_code</th>
-    </tr>
-
-    {% for record in records %}
-    <tr>
-      <td>{{ record.price }}</td>
-      <td>{{ record.num }}</td>
-      <td>{{ record.place }}</td>
-      <td>{{ record.date_created.date()}}</td>
-      <td>{{ record.area_id }}</td>
-      <!--apiでコードを出すようにする-->
-
-      <td>
-        <a href="/delete/{{record.id}}">Delete</a>
-        <br />
-        <a href="/update/{{record.id}}">Update</a>
-      </td>
-    </tr>
-    {% endfor %}
-  </table>
-  <!-- ラジオボタン -->
-  <div class="form">
-    <form action="/" method="POST">
-      <div class="price">
-        <p>料金</p>
-        {% for b in budget %}
-        <input type="radio" name="price" id="price" value="{{b}}" />{{b}} {%
-        endfor %}
-      </div>
-
-      <div class="num">
-        <p>人数</p>
-        <input type="radio" name="num" id="num" value="1人" />1人
-        <input type="radio" name="num" id="num" value="2人" />2人
-        <input type="radio" name="num" id="num" value="3人" />3人
-        <input type="radio" name="num" id="num" value="4人" />4人
-        <input type="radio" name="num" id="num" value="5~10人" />5~10人
-        <input type="radio" name="num" id="num" value="11人~" />11人~
-      </div>
-
-      <div class="place">
-        <p>場所</p>
-        {% for area in middle_area %}
-        <input type="radio" name="place" id="place" value="{{area}}" />{{area}}
-        {% endfor %}
-      </div>
-
-      <div>
-        <input type="submit" value="START" />
-      </div>
-    </form>
-  </div>
-
-  <!-- 抽出した100件のデータからランダムに1件を指定する -->
-  <!-- <div>{{ api3 }}</div> -->
-  <div>{{ api3[range(1,100) | random] }}</div>
-
-
-<div id="app">
-
-  <h1>{message}</h1>
-
-
-  <form action="">
-    <div class="form-group row">
-      <div class="col-9"><label for="">create new task</label>
-        <input type="text" class="form-control" v-model = "task">
-      </div>
-      <div class="col-auto mt-auto"><button class="btn btn-success" type="submit">Create</button>
-      </div>
-    </div>
-  </form>
-
-  <div class="mt-5">
-    <div class="card mb-3" v-for="task, index in tasks" :key="index">
-      <div class="card-body row justify-content-between px-4">
-        
-        {task.title}
-
-        <button type="submit" class="btn-close"></button>
+    <div class="mt-5">
+      <div class="card mb-3" v-for="task, index in tasks" :key="index">
+        <div class="card-body row justify-content-between px-4" @dblclick="completeTask(task)" :class="{'completed': task.completed}">
+          {task.title}
+          <button type="submit" class="btn-close" @click="deleteTask(task)"></button>
+        </div>
       </div>
     </div>
   </div>
 </div>
-  
-
-
-  {% endif %}
-</div>
-
 {% endblock %}
