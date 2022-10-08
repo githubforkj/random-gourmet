@@ -24,7 +24,6 @@ class Attr(db.Model):
     def __repr__(self):
         return '<record %r>' % self.id
 
-
 @app.route('/', methods=['POST', 'GET'])
 def index():
     if request.method == 'POST':
